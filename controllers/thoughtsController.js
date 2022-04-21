@@ -55,11 +55,11 @@ module.exports = {
       },
 // Delete Thoughts
       deleteThought(req, res) {
-        Thoughts.findOneAndRemove({ _id: req.params.userId })
+        Thoughts.findOneAndRemove({ _id: req.params.thoughtId })
           .then((thought) =>
             !thought
               ? res.status(404).json({ message: 'No thought with this id!' })
-              : Thought.findOneAndUpdate(
+              : User.findOneAndUpdate(
                   { thought: req.params.thoughtId },
                   { $pull: { thought: req.params.thoughtId } },
                   { new: true }
@@ -79,7 +79,7 @@ module.exports = {
     addReaction(req,res){
         Thoughts.findOneAndUpdate(
             {_id: req.params.thoughtId},
-            {$push: {reactions: req.body}},
+            {$addToSet: {reactions: req.body}},
             {new: true, runValidators: true}
         )
         .then((dbThoughtData) =>
@@ -90,13 +90,13 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
     },
     removeReaction(req,res){
-        Thoughts.finOneAndUpdate(
+        Thoughts.findOneAndUpdate(
             {_id: req.params.thoughtId},
             {$pull: {reactions: {reactionId: req.params.reactionId}}},
-            { new: true }
+            {runValidators: true, new: true }
         )
-        .then((user) =>
-        !user
+        .then((thought) =>
+        !thought
           ? res
               .status(404)
               .json({ message: 'Reaction deleted but no thoughts with this id!' })
