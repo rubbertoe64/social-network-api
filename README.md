@@ -3,7 +3,7 @@ This is the social network api app. Use Insomnia to test the routes and make sur
 
 Link to video: https://drive.google.com/file/d/1G_4KoSChaysmpfx87echBqdD2ZpMa35S/view?usp=sharing
 
-
+Few images of insomnia working
 
 ![social network1](https://user-images.githubusercontent.com/71856810/164571211-76a0a401-212f-45d4-9739-799c70fc4aca.PNG)
 
